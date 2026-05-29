@@ -32,7 +32,7 @@ export default function DualLensSwipeCard() {
 
         /* Hide scrollbar cross-browser */
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; scroll-behavior: smooth; }
 
         /*
           Scroll container: must have a fixed, known width so each snap-child
