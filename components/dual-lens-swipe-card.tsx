@@ -56,7 +56,7 @@ export default function DualLensSwipeCard() {
             flex-shrink-0
             bg-[#1a1a1a]
             flex flex-col justify-center
-            px-10 md:px-16
+            px-6 sm:px-10 md:px-16
             py-16
             overflow-hidden
           "
@@ -67,9 +67,9 @@ export default function DualLensSwipeCard() {
               className="
                 text-[#f0f0f0]
                 leading-snug tracking-tight
-                text-xl sm:text-2xl md:text-[1.75rem] lg:text-3xl
+                text-lg sm:text-2xl md:text-[1.75rem] lg:text-3xl
                 font-bold
-                max-w-xl
+                w-full break-words hyphens-auto
               "
               style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
             >
@@ -79,7 +79,7 @@ export default function DualLensSwipeCard() {
           </div>
 
           {/* Bottom-left label */}
-          <div className="absolute bottom-6 left-10 md:left-16">
+          <div className="absolute bottom-6 left-6 sm:left-10 md:left-16">
             <p
               className="text-[#707070] text-xs tracking-[0.2em] uppercase"
               style={{ fontFamily: 'var(--font-inter), sans-serif' }}
@@ -104,7 +104,7 @@ export default function DualLensSwipeCard() {
             flex-shrink-0
             bg-[#f0eeeb]
             flex flex-col justify-center
-            px-10 md:px-16
+            px-6 sm:px-10 md:px-16
             py-16
             overflow-hidden
           "
@@ -117,7 +117,7 @@ export default function DualLensSwipeCard() {
                 italic
                 leading-relaxed
                 text-sm sm:text-base md:text-lg
-                max-w-sm
+                w-full break-words hyphens-auto
               "
               style={{ fontFamily: 'var(--font-inter), sans-serif' }}
             >
@@ -129,7 +129,7 @@ export default function DualLensSwipeCard() {
           </div>
 
           {/* Bottom-right label */}
-          <div className="absolute bottom-6 right-10 md:right-16 text-right">
+          <div className="absolute bottom-6 right-6 sm:right-10 md:right-16 text-right">
             <p
               className="text-[#909090] text-xs tracking-[0.2em] uppercase"
               style={{ fontFamily: 'var(--font-inter), sans-serif' }}
