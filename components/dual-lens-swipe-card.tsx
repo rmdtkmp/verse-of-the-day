@@ -2,7 +2,7 @@ export default function DualLensSwipeCard() {
   return (
     <>
       <style>{`
-        /* Playfair Display ornamental double-quote via pseudo-elements */
+        /* Ornamental double-quotes via CSS pseudo-elements — no text characters */
         .quote-block::before {
           content: '\\201C';
           font-family: var(--font-playfair), Georgia, serif;
@@ -29,56 +29,97 @@ export default function DualLensSwipeCard() {
           user-select: none;
           font-weight: 700;
         }
+
         /* Hide scrollbar cross-browser */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /*
+          Scroll container: must have a fixed, known width so each snap-child
+          can resolve 100% against it. width + max-width together prevent
+          the container from growing beyond the viewport on mobile.
+        */
+        .swipe-container {
+          width: 100%;
+          max-width: 100%;
+        }
+
+        /*
+          Each snap region on mobile: exactly 100vw wide — a concrete pixel
+          boundary the browser can use for text wrapping.
+        */
+        .snap-region {
+          width: 100vw;
+          max-width: 100vw;
+          flex-shrink: 0;
+        }
+
+        /* On md+ the grid takes over; unset the vw constraint */
+        @media (min-width: 768px) {
+          .snap-region {
+            width: auto;
+            max-width: none;
+          }
+        }
+
+        /*
+          Inner text column: fills the snap-region width minus padding.
+          box-sizing ensures padding doesn't push it outside its parent.
+        */
+        .text-column {
+          width: 100%;
+          box-sizing: border-box;
+          min-width: 0; /* prevent flex blow-out */
+        }
       `}</style>
 
       {/*
-        Mobile: horizontal scroll-snap container, each region is full viewport width.
-        Desktop (md+): side-by-side grid, equal height forced by items-stretch.
+        Mobile  → horizontal scroll-snap, one card per viewport width.
+        Desktop → side-by-side grid, equal height via items-stretch default.
       */}
       <div
         className="
-          w-full h-screen
-          flex overflow-x-auto snap-x snap-mandatory no-scrollbar
+          swipe-container
+          h-screen
+          flex overflow-x-scroll snap-x snap-mandatory no-scrollbar
           md:overflow-x-visible md:grid md:grid-cols-2
         "
-        style={{ scrollBehavior: 'smooth' }}
       >
 
         {/* ── REGION 1 · Verse of the Day ── */}
         <section
           className="
+            snap-region snap-start
             relative
-            min-w-full md:min-w-0
-            snap-start
-            flex-shrink-0
             bg-[#1a1a1a]
-            flex flex-col justify-center
+            flex flex-col
             px-6 sm:px-10 md:px-16
             py-16
             overflow-hidden
           "
         >
-          {/* Pseudo-element quotes live on this div */}
           <div className="quote-block relative z-10 flex flex-col justify-center flex-1 py-8">
-            <p
-              className="
-                text-[#f0f0f0]
-                leading-snug tracking-tight
-                text-lg sm:text-2xl md:text-[1.75rem] lg:text-3xl
-                font-bold
-                w-full break-words hyphens-auto
-              "
-              style={{ fontFamily: 'var(--font-playfair), Georgia, serif' }}
-            >
-              For God so loved the world that he gave his one and only Son,
-              that whoever believes in him shall not perish but have eternal life.
-            </p>
+            <div className="text-column">
+              <p
+                className="
+                  text-[#f0f0f0]
+                  leading-snug tracking-tight
+                  text-lg sm:text-2xl md:text-[1.75rem] lg:text-3xl
+                  font-bold
+                "
+                style={{
+                  fontFamily: 'var(--font-playfair), Georgia, serif',
+                  textWrap: 'pretty',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word',
+                }}
+              >
+                For God so loved the world that he gave his one and only Son,
+                that whoever believes in him shall not perish but have eternal life.
+              </p>
+            </div>
           </div>
 
-          {/* Bottom-left label */}
           <div className="absolute bottom-6 left-6 sm:left-10 md:left-16">
             <p
               className="text-[#707070] text-xs tracking-[0.2em] uppercase"
@@ -98,37 +139,39 @@ export default function DualLensSwipeCard() {
         {/* ── REGION 2 · Fun Fact ── */}
         <section
           className="
+            snap-region snap-start
             relative
-            min-w-full md:min-w-0
-            snap-start
-            flex-shrink-0
             bg-[#f0eeeb]
-            flex flex-col justify-center
+            flex flex-col
             px-6 sm:px-10 md:px-16
             py-16
             overflow-hidden
           "
         >
-          {/* Flex-1 centering wrapper for spatial balance */}
           <div className="flex-1 flex flex-col justify-center py-8">
-            <p
-              className="
-                text-[#2a2a2a]
-                italic
-                leading-relaxed
-                text-sm sm:text-base md:text-lg
-                w-full break-words hyphens-auto
-              "
-              style={{ fontFamily: 'var(--font-inter), sans-serif' }}
-            >
-              The Gospel of John was likely written between 90–110 AD — later than the
-              synoptic gospels — and uniquely opens with a prologue mirroring the
-              cosmological language of Genesis, positioning Christ as the pre-existent
-              Logos, or &ldquo;Word,&rdquo; through whom all creation came into being.
-            </p>
+            <div className="text-column">
+              <p
+                className="
+                  text-[#2a2a2a]
+                  italic
+                  leading-relaxed
+                  text-sm sm:text-base md:text-lg
+                "
+                style={{
+                  fontFamily: 'var(--font-inter), sans-serif',
+                  textWrap: 'pretty',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word',
+                }}
+              >
+                The Gospel of John was likely written between 90–110 AD — later than
+                the synoptic gospels — and uniquely opens with a prologue mirroring the
+                cosmological language of Genesis, positioning Christ as the pre-existent
+                Logos, or &ldquo;Word,&rdquo; through whom all creation came into being.
+              </p>
+            </div>
           </div>
 
-          {/* Bottom-right label */}
           <div className="absolute bottom-6 right-6 sm:right-10 md:right-16 text-right">
             <p
               className="text-[#909090] text-xs tracking-[0.2em] uppercase"
