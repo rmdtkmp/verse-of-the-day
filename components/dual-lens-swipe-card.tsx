@@ -6,12 +6,12 @@ export default function DualLensSwipeCard() {
         .quote-block::before {
           content: '\\201C';
           font-family: var(--font-playfair), Georgia, serif;
-          font-size: clamp(7rem, 14vw, 12rem);
+          font-size: clamp(3rem, 8vw, 6rem);
           line-height: 0.75;
           color: #d4d4d4;
           position: absolute;
-          top: 2rem;
-          left: 2rem;
+          top: 1.5rem;
+          left: 1.5rem;
           pointer-events: none;
           user-select: none;
           font-weight: 700;
@@ -19,12 +19,12 @@ export default function DualLensSwipeCard() {
         .quote-block::after {
           content: '\\201D';
           font-family: var(--font-playfair), Georgia, serif;
-          font-size: clamp(7rem, 14vw, 12rem);
+          font-size: clamp(3rem, 8vw, 6rem);
           line-height: 0;
           color: #d4d4d4;
           position: absolute;
-          bottom: 5.5rem;
-          right: 2rem;
+          bottom: 3rem;
+          right: 1.5rem;
           pointer-events: none;
           user-select: none;
           font-weight: 700;
@@ -62,12 +62,12 @@ export default function DualLensSwipeCard() {
           "
         >
           {/* Pseudo-element quotes live on this div */}
-          <div className="quote-block relative z-10 flex flex-col justify-center flex-1 py-12">
+          <div className="quote-block relative z-10 flex flex-col justify-center flex-1 py-8">
             <p
               className="
                 text-[#f0f0f0]
                 leading-snug tracking-tight
-                text-3xl sm:text-4xl md:text-[2.6rem] lg:text-5xl
+                text-xl sm:text-2xl md:text-[1.75rem] lg:text-3xl
                 font-bold
                 max-w-xl
               "
@@ -110,13 +110,13 @@ export default function DualLensSwipeCard() {
           "
         >
           {/* Flex-1 centering wrapper for spatial balance */}
-          <div className="flex-1 flex flex-col justify-center py-12">
+          <div className="flex-1 flex flex-col justify-center py-8">
             <p
               className="
                 text-[#2a2a2a]
                 italic
                 leading-relaxed
-                text-base sm:text-lg md:text-xl
+                text-sm sm:text-base md:text-lg
                 max-w-sm
               "
               style={{ fontFamily: 'var(--font-inter), sans-serif' }}
