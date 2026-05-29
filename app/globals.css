@@ -125,3 +125,41 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+
+  .quote-decor::before {
+    content: '\201C';
+    font-family: var(--font-playfair), Georgia, serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.75;
+    color: #d4d4d4;
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    pointer-events: none;
+    user-select: none;
+    font-weight: 700;
+  }
+  .quote-decor::after {
+    content: '\201D';
+    font-family: var(--font-playfair), Georgia, serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0;
+    color: #d4d4d4;
+    position: absolute;
+    bottom: 3rem;
+    right: 1.5rem;
+    pointer-events: none;
+    user-select: none;
+    font-weight: 700;
+  }
+}
