@@ -7,7 +7,7 @@ function getTodayWIB(): string {
 }
 
 export default async function Home() {
-  const sql = neon(process.env.DATABASE_URL!)
+  const sql = neon(process.env.POSTGRES_URL!)
 
   // Create table if it doesn't exist
   await sql`
