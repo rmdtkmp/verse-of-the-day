@@ -1,25 +1,20 @@
-import { neon } from '@neondatabase/serverless'
-
-const sql = neon(process.env.DATABASE_URL!)
+import { sql } from '@vercel/postgres'
 import DualLensSwipeCard from '@/components/dual-lens-swipe-card'
 
-// Get today's date in WIB (UTC+7)
+// Get today's date in Asia/Jakarta timezone (WIB)
 function getTodayWIB(): string {
-  const now = new Date()
-  const wibOffset = 7 * 60 // WIB is UTC+7
-  const utcTime = now.getTime() + now.getTimezoneOffset() * 60000
-  const wibTime = new Date(utcTime + wibOffset * 60000)
-  return wibTime.toISOString().split('T')[0] // YYYY-MM-DD
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta' }) // YYYY-MM-DD
 }
 
 export default async function Home() {
   // Create table if it doesn't exist
   await sql`
     CREATE TABLE IF NOT EXISTS daily_readings (
-      target_date DATE PRIMARY KEY,
-      verse_text TEXT NOT NULL,
-      verse_source TEXT NOT NULL,
-      fun_fact_text TEXT NOT NULL
+      id SERIAL PRIMARY KEY,
+      target_date DATE UNIQUE,
+      verse_text TEXT,
+      verse_source TEXT,
+      fun_fact_text TEXT
     )
   `
 
@@ -31,14 +26,14 @@ export default async function Home() {
   `
 
   // If no reading exists for today, insert mock data
-  if (existingReading.length === 0) {
+  if (existingReading.rows.length === 0) {
     await sql`
       INSERT INTO daily_readings (target_date, verse_text, verse_source, fun_fact_text)
       VALUES (
         ${todayDate},
         'The light shines in the darkness, and the darkness has not overcome it.',
         'John 1:5',
-        'Zero is the only number that cannot be represented in Roman numerals. The concept of zero as a number was introduced to Europe through Arabic mathematicians who had learned it from Indian scholars around the 9th century.'
+        'The concept of ''zero'' as a numerical digit was fully developed in ancient India around the 5th century AD, fundamentally transforming global mathematics.'
       )
     `
   }
@@ -48,7 +43,7 @@ export default async function Home() {
     SELECT * FROM daily_readings WHERE target_date = ${todayDate}
   `
 
-  const reading = result[0]
+  const reading = result.rows[0]
 
   // Format date for display (e.g., "May 30")
   const displayDate = new Date(reading.target_date).toLocaleDateString('en-US', {
