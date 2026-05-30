@@ -1,4 +1,4 @@
-import { neon } from '@neondatabase/serverless'
+import { sql } from '@vercel/postgres'
 import DualLensSwipeCard from '@/components/dual-lens-swipe-card'
 
 // Get today's date in Asia/Jakarta timezone (WIB)
@@ -7,12 +7,6 @@ function getTodayWIB(): string {
 }
 
 export default async function Home() {
-  const connectionString = process.env.POSTGRES_URL || process.env.DATABASE_URL
-  if (!connectionString) {
-    throw new Error('Database connection string not found. Please set POSTGRES_URL or DATABASE_URL.')
-  }
-  const sql = neon(connectionString)
-
   // Create table if it doesn't exist
   await sql`
     CREATE TABLE IF NOT EXISTS daily_readings (
@@ -32,7 +26,7 @@ export default async function Home() {
   `
 
   // If no reading exists for today, insert mock data
-  if (existingReading.length === 0) {
+  if (existingReading.rows.length === 0) {
     await sql`
       INSERT INTO daily_readings (target_date, verse_text, verse_source, fun_fact_text)
       VALUES (
@@ -49,7 +43,7 @@ export default async function Home() {
     SELECT * FROM daily_readings WHERE target_date = ${todayDate}
   `
 
-  const reading = result[0]
+  const reading = result.rows[0]
 
   // Format date for display (e.g., "May 30")
   const displayDate = new Date(reading.target_date).toLocaleDateString('en-US', {
