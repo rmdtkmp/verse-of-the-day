@@ -1,4 +1,6 @@
-import { sql } from '@vercel/postgres'
+import { neon } from '@neondatabase/serverless'
+
+const sql = neon(process.env.DATABASE_URL!)
 import DualLensSwipeCard from '@/components/dual-lens-swipe-card'
 
 // Get today's date in WIB (UTC+7)
@@ -29,7 +31,7 @@ export default async function Home() {
   `
 
   // If no reading exists for today, insert mock data
-  if (existingReading.rows.length === 0) {
+  if (existingReading.length === 0) {
     await sql`
       INSERT INTO daily_readings (target_date, verse_text, verse_source, fun_fact_text)
       VALUES (
@@ -46,7 +48,7 @@ export default async function Home() {
     SELECT * FROM daily_readings WHERE target_date = ${todayDate}
   `
 
-  const reading = result.rows[0]
+  const reading = result[0]
 
   // Format date for display (e.g., "May 30")
   const displayDate = new Date(reading.target_date).toLocaleDateString('en-US', {
