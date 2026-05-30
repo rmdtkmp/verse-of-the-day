@@ -7,7 +7,11 @@ function getTodayWIB(): string {
 }
 
 export default async function Home() {
-  const sql = neon(process.env.POSTGRES_URL!)
+  const connectionString = process.env.POSTGRES_URL || process.env.DATABASE_URL
+  if (!connectionString) {
+    throw new Error('Database connection string not found. Please set POSTGRES_URL or DATABASE_URL.')
+  }
+  const sql = neon(connectionString)
 
   // Create table if it doesn't exist
   await sql`
