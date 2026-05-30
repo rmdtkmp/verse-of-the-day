@@ -1,4 +1,16 @@
-export default function DualLensSwipeCard() {
+interface DualLensSwipeCardProps {
+  verseText: string
+  verseSource: string
+  funFactText: string
+  displayDate: string
+}
+
+export default function DualLensSwipeCard({
+  verseText,
+  verseSource,
+  funFactText,
+  displayDate,
+}: DualLensSwipeCardProps) {
   return (
     <>
       <style>{`
@@ -114,8 +126,7 @@ export default function DualLensSwipeCard() {
                   overflowWrap: 'break-word',
                 }}
               >
-                For God so loved the world that he gave his one and only Son,
-                that whoever believes in him shall not perish but have eternal life.
+{verseText}
               </p>
             </div>
           </div>
@@ -131,7 +142,7 @@ export default function DualLensSwipeCard() {
               className="text-[#505050] text-xs tracking-[0.2em] mt-0.5"
               style={{ fontFamily: 'var(--font-inter), sans-serif' }}
             >
-              John 3:16 &mdash; May 30
+              {verseSource} &mdash; {displayDate}
             </p>
           </div>
         </section>
@@ -164,10 +175,7 @@ export default function DualLensSwipeCard() {
                   overflowWrap: 'break-word',
                 }}
               >
-                The Gospel of John was likely written between 90–110 AD — later than
-                the synoptic gospels — and uniquely opens with a prologue mirroring the
-                cosmological language of Genesis, positioning Christ as the pre-existent
-                Logos, or &ldquo;Word,&rdquo; through whom all creation came into being.
+                {funFactText}
               </p>
             </div>
           </div>
