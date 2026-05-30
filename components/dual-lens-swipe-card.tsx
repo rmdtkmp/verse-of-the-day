@@ -6,7 +6,7 @@ export default function DualLensSwipeCard() {
       <div className="relative bg-[#1a1a1a] flex flex-col px-6 py-16 sm:px-10 md:px-16 overflow-hidden flex-shrink-0 w-screen max-w-screen snap-start md:w-auto md:max-w-none">
         <div className="quote-decor relative z-10 flex flex-col justify-center flex-1 py-8 min-w-0">
           <p
-            className="text-[#f0f0f0] leading-snug tracking-tight text-lg sm:text-2xl md:text-[1.75rem] lg:text-3xl font-bold font-[family-name:var(--font-playfair)] break-words"
+            className="text-[#f0f0f0] leading-snug tracking-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-playfair)] break-words"
             style={{ textWrap: 'pretty' }}
           >
             For God so loved the world that he gave his one and only Son,
